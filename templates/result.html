@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Image Correctness Result</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: #eef1f6;
+            text-align: center;
+            padding: 50px;
+        }
+        .container {
+            background: #fff;
+            padding: 35px;
+            border-radius: 14px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            display: inline-block;
+            max-width: 750px;
+            width: 100%;
+        }
+        img {
+            border-radius: 10px;
+            margin-bottom: 20px;
+            max-width: 90%;
+        }
+        h2, h3 {
+            color: #2e3b55;
+        }
+        .result {
+            font-weight: bold;
+            font-size: 1.1em;
+            padding: 12px;
+            border-radius: 8px;
+            white-space: pre-line;
+        }
+        .success {
+            color: #2e7d32;
+            background: #d7ffd9;
+            border: 1px solid #81c784;
+        }
+        .fail {
+            color: #b71c1c;
+            background: #ffdde0;
+            border: 1px solid #e57373;
+        }
+        a {
+            display: inline-block;
+            margin-top: 25px;
+            text-decoration: none;
+            color: white;
+            background: #007bff;
+            padding: 10px 25px;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+        a:hover {
+            background: #0056b3;
+        }
+        footer {
+            margin-top: 40px;
+            color: #666;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>📸 Uploaded Image</h2>
+        <img src="{{ url_for('static', filename=image) }}" alt="Uploaded Image"><br>
+
+        <h3>📝 Description:</h3>
+        <p>{{ desc }}</p>
+
+        <h3>🧾 Result Summary:</h3>
+        <p class="result {% if 'ACCEPTED' in result %}success{% else %}fail{% endif %}">
+            {{ result }}
+        </p>
+
+        {% if graph %}
+            <h3>📊 Graphical Analysis:</h3>
+            <!-- ✅ FIXED PATH HERE -->
+            <img src="/static/{{ graph }}" alt="Result Graph">
+        {% endif %}
+
+        <a href="/">🔁 Check Another Product</a>
+    </div>
+
+    <footer>© 2025 Image Correctness Validation System</footer>
+</body>
+</html>

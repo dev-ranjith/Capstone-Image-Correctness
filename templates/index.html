@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Automated Product Image Correctness</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: #eef1f6;
+            text-align: center;
+            padding: 50px;
+        }
+        .container {
+            background: #fff;
+            padding: 35px;
+            border-radius: 14px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            display: inline-block;
+            transition: transform 0.3s ease;
+            width: 90%;
+            max-width: 450px;
+        }
+        .container:hover {
+            transform: scale(1.02);
+        }
+        h2 {
+            color: #2e3b55;
+            margin-bottom: 25px;
+        }
+        input, button {
+            margin: 12px 0;
+            padding: 10px;
+            width: 85%;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 15px;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        #loading {
+            display: none;
+            color: #444;
+            margin-top: 10px;
+            font-style: italic;
+        }
+        #preview {
+            display: none;
+            width: 220px;
+            border-radius: 10px;
+            margin-top: 15px;
+            border: 1px solid #ccc;
+        }
+        footer {
+            margin-top: 40px;
+            color: #666;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>🧠 Image Correctness Validator</h2>
+        <form action="/upload" method="post" enctype="multipart/form-data" onsubmit="showLoading()">
+            <input type="file" name="file" accept=".png,.jpg,.jpeg,.pdf" required><br>
+            <input type="text" name="description" placeholder="Enter product description (e.g., red shoes)" required><br>
+            <button id="submitBtn" type="submit">Analyze Image</button>
+            <p id="loading">⏳ Processing your image, please wait...</p>
+        </form>
+        <img id="preview" alt="Preview Image"/>
+    </div>
+
+    <footer>© 2025 Image Correctness Validation System</footer>
+
+    <script>
+        // Show loading message on submit
+        function showLoading() {
+            document.getElementById('submitBtn').disabled = true;
+            document.getElementById('submitBtn').innerText = 'Analyzing...';
+            document.getElementById('loading').style.display = 'block';
+        }
+
+        // Image preview before upload
+        document.querySelector('input[name="file"]').addEventListener('change', function (e) {
+            const file = e.target.files[0];
+            const preview = document.getElementById('preview');
+            if (file && file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = function (event) {
+                    preview.src = event.target.result;
+                    preview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            } else {
+                preview.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
